@@ -29,6 +29,13 @@ gulp.task('index', function () {
             .pipe(connect.reload());
 });
 
+gulp.task('assets', function () {
+    gulp.src(['src/assets/**/*'])
+        .pipe(gulp.dest('dist'));
+    gulp.src(['src/css/**/*'])
+        .pipe(gulp.dest('dist/css'));
+});
+
 gulp.task('connect', function () {
    connect.server({
        host: '0.0.0.0',
@@ -40,8 +47,8 @@ gulp.task('connect', function () {
 gulp.task('watch', function () {
     gulp.watch(['./src/html/**/*.html'], ['index']);
     gulp.watch(['./src/js/**/*'], ['browserify']);
-    gulp.watch(['./src/sass/*.sass'], ['sass']);
+    gulp.watch(['./src/css/*.css'], ['assets']);
 });
 
-gulp.task('build', ['index', 'browserify']);
+gulp.task('build', ['index', 'assets', 'browserify']);
 gulp.task('default', ['build', 'watch', 'connect']);
